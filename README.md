@@ -3,7 +3,7 @@
 # Description
 The Docker Extension uses the CA APM Restful EPAgent to monitor Docker.
 
-Docker is an open platform to build, ship, and run distributed applications. The Docker extension gathers metrics from [Docker Remote API](https://docs.docker.com/reference/api/docker_remote_api/) via HIIPS.
+Docker is an open platform to build, ship, and run distributed applications. The Docker extension gathers metrics from [Docker Remote API](https://docs.docker.com/reference/api/docker_remote_api/) via HTTPS.
 
 For installation instructions, see the README.md file.
 
@@ -14,7 +14,9 @@ The Docker Extension uses uses the CA APM Restful EPAgent to monitor Docker.
 Restful EPAgent 9.7.1 and later
 
 # Dependencies
-Pyhton 3 with requests module. Obtain in one of the following ways:
+Python 3 with requests module.
+
+Obtain in one of the following ways:
       `# yum install python-requests`
                    or
       `# pip install requests`
@@ -29,9 +31,10 @@ Tested with Docker version 1.6.1, API version 1.18.
 
 # Prerequisite
 An installed and configured EPAgent.
+
 Find the version 9.7 to 10.x documentation on [the CA APM documentation wiki.](https://docops.ca.com)
 
-# Install and Configure Docker Extension
+# Install and Configure the Docker Extension
 
 1. Download the extension from the CA APM Marketplace.
    http://marketplace.ca.com/shop/ca/?cat=29
@@ -44,33 +47,33 @@ Find the version 9.7 to 10.x documentation on [the CA APM documentation wiki.](h
 1. Run `python3 docker.py` from the command line.
    For example:
 
-`python3 docker.py -p 8080 -d boot2docker -r 2376 --certificate=$DOCKER_CERT_PATH/cert.pem -k $DOCKER_CERT_PATH/key.pem`
+   `python3 docker.py -p 8080 -d boot2docker -r 2376 --certificate=$DOCKER_CERT_PATH/cert.pem -k $DOCKER_CERT_PATH/key.pem`
 
 2. Change the parameters to fit your environment. Run the script with option `-h` to get this usage information:
 
 ```
-Usage: docker.py [options]
+   Usage: docker.py [options]
 
-Options:
-    -h, --help            show this help message and exit
-    -v, --verbose         verbose output
-    -H HOSTNAME, --hostname=HOSTNAME
+   Options:
+     -h, --help            show this help message and exit
+     -v, --verbose         verbose output
+     -H HOSTNAME, --hostname=HOSTNAME
                           hostname EPAgent is running on (default: localhost)
-    -p PORT, --port=PORT  http port of the EPAgent (introscope.epagent.config.httpServerPort)
-    -m METRICPATH, --metric_path=METRICPATH
+     -p PORT, --port=PORT  http port of the EPAgent (introscope.epagent.config.httpServerPort)
+     -m METRICPATH, --metric_path=METRICPATH
                           metric path prefix for all metrics
-    -d DOCKERHOST, --docker_host=DOCKERHOST
+     -d DOCKERHOST, --docker_host=DOCKERHOST
                           docker hostname (default: localhost)
-    -r DOCKERPORT, --docker_port=DOCKERPORT
+     -r DOCKERPORT, --docker_port=DOCKERPORT
                           docker Remote API port (default: 2376)
-    -c CERTFILE, --certificate=CERTFILE
+     -c CERTFILE, --certificate=CERTFILE
                           https certificate
-    -k KEYFILE, --private_key=KEYFILE
+     -k KEYFILE, --private_key=KEYFILE
                           https private key
 ```
 
 # Metrics
-These metrics about the Docker engine display under the Docker node:
+These metrics about the Docker engine display under the **Docker** node:
 * Container Count
 * Image Count
 * Running Containers
@@ -78,7 +81,7 @@ These metrics about the Docker engine display under the Docker node:
 * MemoryLimit (boolean: 0/1)
 * SwapLimit (boolean: 0/1)
 
-These Container metrics for running containers display under the Docker|Containers|<name> node:
+These Container metrics for running containers display under the **Docker|Containers|<name>** node:
 * Image name
 * SizeRw and SizeRootFS: file system sizes
 * Status
@@ -89,12 +92,16 @@ These Container metrics for running containers display under the Docker|Containe
 **More information:** [Docker Remote API](https://docs.docker.com/reference/api/docker_remote_api/)
 
 # Custom Tab
-The docker.typeviewers.xml matches metric paths starting with **Docker**. Copy the docker.typeviewers.xml file from the Docker extension <docker-EPA_REST> directory to the `ext/xmltv` Enterprise Manager directory. Restart WebView or log off and back on to your Workstation. An overview provides general metrics and a list of containers.
+The docker.typeviewers.xml matches metric paths starting with **Docker**. 
 
-Container metrics about the file system, CPU, memory, and the network metrics display as graphs.
+Copy the docker.typeviewers.xml file from the Docker extension <docker-EPA_REST> directory to the `ext/xmltv` Enterprise Manager directory. 
+
+Restart WebView or log off and back on to Workstation. 
+
+An overview provides general metrics and a list of containers. Container metrics about the file system, CPU, memory, and the network metrics display as graphs.
 
 # Debugging and Troubleshooting
-Your can run docker.py with option -v to provide verbose output. You can also remove the '#' in front of several print statements throughput the script.
+Your can run `docker.py` with option `-v` to provide verbose output. You can also remove the `#` in front of several print statements throughput the script.
 
 # Support
 This document and extension are made available from CA Technologies. They are provided as examples at no charge as a courtesy to the CA APM Community at large. This extension might require modification for use in your environment. However, this extension is not supported by CA Technologies, and inclusion in this site should not be construed to be an endorsement or recommendation by CA Technologies. This extension is not covered by the CA Technologies software license agreement and there is no explicit or implied warranty from CA Technologies. The extension can be used and distributed freely amongst the CA APM Community, but not sold. As such, it is unsupported software, provided as is without warranty of any kind, express or implied, including but not limited to warranties of merchantability and fitness for a particular purpose. CA Technologies does not warrant that this resource will meet your requirements or that the operation of the resource will be uninterrupted or error free or that any defects will be corrected. The use of this extension implies that you understand and agree to the terms listed herein.
