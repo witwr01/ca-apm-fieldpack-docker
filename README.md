@@ -17,11 +17,9 @@ Restful EPAgent 9.7.1 and later
 Python 3 with requests module.
 
 Obtain in one of the following ways:
-      `# yum install python-requests`
-                   or
-      `# pip install requests`
-                   or
-      `# easy_install requests`
+* `# yum install python-requests`
+* `# pip install requests`
+* `# easy_install requests`
 
 # Supported Third Party Versions
 Tested with Docker version 1.6.1, API version 1.18.
@@ -36,8 +34,7 @@ Find the version 9.7 to 10.x documentation on [the CA APM documentation wiki.](h
 
 # Install and Configure the Docker Extension
 
-1. Download the extension from the CA APM Marketplace.
-   http://marketplace.ca.com/shop/ca/?cat=29
+1. Download the extension from the [CA APM Marketplace.] (http://marketplace.ca.com/shop/ca/?cat=29)
 2. Navigate to the downloaded extension and unzip or untar the file as appropriate into the <*EPAgent_Home*> directory.
 3. Configure the IntroscopeEPAgent.properties file <*EPAgent_Home*> directory.
 4. Copy the docker.typeviewers.xml file from the extension <docker-EPA_REST> directory to the <MOM_HOME>/ext/xmltv directory.
@@ -49,7 +46,9 @@ Find the version 9.7 to 10.x documentation on [the CA APM documentation wiki.](h
 
    `python3 docker.py -p 8080 -d boot2docker -r 2376 --certificate=$DOCKER_CERT_PATH/cert.pem -k $DOCKER_CERT_PATH/key.pem`
 
-2. Change the parameters to fit your environment. Run the script with option `-h` to get this usage information:
+2. Change the parameters to fit your environment.
+
+Run the script with option `-h` to get this usage information:
 
 ```
    Usage: docker.py [options]
@@ -92,13 +91,14 @@ These Container metrics for running containers display under the **Docker|Contai
 **More information:** [Docker Remote API](https://docs.docker.com/reference/api/docker_remote_api/)
 
 # Custom Tab
-The docker.typeviewers.xml matches metric paths starting with **Docker**. 
+The docker.typeviewers.xml matches metric paths starting with **Docker**.
 
-Copy the docker.typeviewers.xml file from the Docker extension <docker-EPA_REST> directory to the `ext/xmltv` Enterprise Manager directory. 
+Provide an Overview Tab
 
-Restart WebView or log off and back on to Workstation. 
+1. Copy the docker.typeviewers.xml file from the Docker extension <docker-EPA_REST> directory to the `ext/xmltv` Enterprise Manager directory. 
+2. Restart WebView or log off and back on to Workstation. 
 
-An overview provides general metrics and a list of containers. Container metrics about the file system, CPU, memory, and the network metrics display as graphs.
+An Overview provides general metrics and a list of containers. Container metrics about the file system, CPU, memory, and the network metrics display as graphs.
 
 # Debugging and Troubleshooting
 Your can run `docker.py` with option `-v` to provide verbose output. You can also remove the `#` in front of several print statements throughput the script.
