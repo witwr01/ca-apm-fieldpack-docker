@@ -1,27 +1,17 @@
 # Docker Extension
 
 # Description
-The Docker Extension uses CA APM to monitor Docker.
+The Docker Extension uses the CA APM Restful EPAgent to monitor Docker.
 
 Docker is an open platform to build, ship, and run distributed applications. The Docker extension gathers metrics from [Docker Remote API](https://docs.docker.com/reference/api/docker_remote_api/) via HIIPS.
 
 For installation instructions, see the README.md file.
 
 # Short Description
-The Docker Extension uses CA APM to monitor Docker.
+The Docker Extension uses uses the CA APM Restful EPAgent to monitor Docker.
 
 # APM version
 Restful EPAgent 9.7.1 and later
-
-# Supported Third Party Versions
-Tested with Docker version 1.6.1, API version 1.18.
-
-# License
-[Apache License, Version 2.0, January 2004](http://www.apache.org/licenses/). See [Licensing](https://communities.ca.com/docs/DOC-231150910#license) on the CA APM Developer Community.
-
-# Prerequisites
-* Install, configure, and run an EPAgent on the same server as this extension or on a remote server.
-Find the version 9.7 to 10.x EPAgent documentation on [the CA APM wiki at docops.ca.com](https://docops.ca.com/display/APMDEVOPS).
 
 # Dependencies
 Pyhton 3 with requests module. Obtain in one of the following ways:
@@ -31,60 +21,32 @@ Pyhton 3 with requests module. Obtain in one of the following ways:
                    or
       `# easy_install requests`
 
-# Installation
+# Supported Third Party Versions
+Tested with Docker version 1.6.1, API version 1.18.
 
-## Install Using CA APM Control Center
+# License
+[Apache License, Version 2.0, January 2004](http://www.apache.org/licenses/)
 
-### 10.5 
+# Prerequisite
+An installed and configured EPAgent.
+Find the version 9.7 to 10.x documentation on [the CA APM documentation wiki.](https://docops.ca.com)
 
-1. Download the bundle (extension) from the CA APM Marketplace.
-   http://marketplace.ca.com/shop/ca/?cat=29
-2. Go to the Bundles page and click the **Import** button.
-2. Navigate to the downloaded bundle and click **Open**.
-3. On the Packages page, add the bundle to the desired package.
-4. Copy the docker.typeviewers.xml file from the extension <docker-EPA_REST> directory to the <MOM_HOME>/ext/xmltv directory.
-
-### 10.2 and 10.3
-
-1. Download the extension (bundle) from the CA APM Marketplace.
-   http://marketplace.ca.com/shop/ca/?cat=29
-2. Navigate to the downloaded bundle.
-3. Copy the bundle to the <APMCommandCenterServer>/import directory. 
-   The bundle is automatically imported into the APM Command Center database and moved to the bundles directory.
-4. Copy the docker.typeviewers.xml file from the extension <docker-EPA_REST> directory to the <MOM_HOME>/ext/xmltv directory.
-
-## Install Manually
-
-### 10.5 and later
+# Install and Configure Docker Extension
 
 1. Download the extension from the CA APM Marketplace.
    http://marketplace.ca.com/shop/ca/?cat=29
-2. Navigate to the downloaded extension.
-3. Copy the .tar file to the <*Agent_Home*>/extensions/deploy directory.
-   The agent automatically automatically installs and deploys the extension.
+2. Navigate to the downloaded extension and unzip or untar the file as appropriate into the <*EPAgent_Home*> directory.
+3. Configure the IntroscopeEPAgent.properties file <*EPAgent_Home*> directory.
 4. Copy the docker.typeviewers.xml file from the extension <docker-EPA_REST> directory to the <MOM_HOME>/ext/xmltv directory.
-   The Docker extension agent starts monitoring the Docker.
 
-### 10.3 and earlier
-
-1. Download the extension from the CA APM Marketplace.
-   http://marketplace.ca.com/shop/ca/?cat=29
-2. Navigate to the downloaded extension and unzip or untar the file as appropriate into the <*Agent_Home*> directory.
-3. Copy the extension jar file to the <*Agent_Home*>/core/ext directory.
-4. Copy the .pbd or pbl files to the <*Agent_Home*>/core/config directory.
-5. Update the IntroscopeAgent.profile file
-   * Navigate to <*Agent_Home*>/core/config to update the IntroscopeAgent.profile file.
-   * Add the .pbl files to the directives in the IntroscopeAgent.profile.
-6. Copy the docker.typeviewers.xml file from the extension <docker-EPA_REST> directory to the <MOM_HOME>/ext/xmltv directory.
-
-# Usage
+# Use the Docker Extension
 
 1. Run `python3 docker.py` from the command line.
    For example:
 
 `python3 docker.py -p 8080 -d boot2docker -r 2376 --certificate=$DOCKER_CERT_PATH/cert.pem -k $DOCKER_CERT_PATH/key.pem`
 
-2. Change the parameters to fit your environment. Run the script with option '-h' to get this usage information:
+2. Change the parameters to fit your environment. Run the script with option `-h` to get this usage information:
 
 ```
 Usage: docker.py [options]
@@ -124,10 +86,10 @@ These Container metrics for running containers display under the Docker|Containe
 * Memory metrics
 * Network metrics (receive and transmit)
 
-**More information:** [Docker Remote API](https://docs.docker.com/reference/api/docker_remote_api/).
+**More information:** [Docker Remote API](https://docs.docker.com/reference/api/docker_remote_api/)
 
 # Custom Tab
-The docker.typeviewers.xml matches metric paths starting with "Docker". Copy the docker.typeviewers.xml file from the extension <docker-EPA_REST> directory to the `ext/xmltv` Enterprise Manager directory. Restart WebView or log off and back on to your Workstation. An overview provides general metrics and a list of containers.
+The docker.typeviewers.xml matches metric paths starting with **Docker**. Copy the docker.typeviewers.xml file from the Docker extension <docker-EPA_REST> directory to the `ext/xmltv` Enterprise Manager directory. Restart WebView or log off and back on to your Workstation. An overview provides general metrics and a list of containers.
 
 Container metrics about the file system, CPU, memory, and the network metrics display as graphs.
 
