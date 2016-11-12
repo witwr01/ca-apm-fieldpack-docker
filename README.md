@@ -1,51 +1,90 @@
-# Docker Field Pack 1.0
+# Docker Extension
 
-## Description
-Docker is an open platform for developers and sysadmins to build, ship, and run distributed applications. The Docker field pack gathers metrics from the [Docker Remote API](https://docs.docker.com/reference/api/docker_remote_api/) via https.
+# Description
+The Docker Extension uses CA APM to monitor Docker.
 
-## APM version
-Restful EPAgent 9.7.1.
+Docker is an open platform to build, ship, and run distributed applications. The Docker extension gathers metrics from [Docker Remote API](https://docs.docker.com/reference/api/docker_remote_api/) via HIIPS.
 
-## Supported third party versions
+For installation instructions, see the README.md file.
+
+# Short Description
+The Docker Extension uses CA APM to monitor Docker.
+
+# APM version
+Restful EPAgent 9.7.1 and later
+
+# Supported Third Party Versions
 Tested with Docker version 1.6.1, API version 1.18.
 
-## Limitations
-Currently the field pack only queries one docker engine and only works via https. I have tested it only with boot2docker on MacOS.
-Recently I had problems with the certificate so I disabled certificate verification.
-
-## License
+# License
 [Apache License, Version 2.0, January 2004](http://www.apache.org/licenses/). See [Licensing](https://communities.ca.com/docs/DOC-231150910#license) on the CA APM Developer Community.
 
+# Prerequisites
+* Install, configure, and run an EPAgent on the same server as this extension or on a remote server.
+Find the version 9.7 to 10.x EPAgent documentation on [the CA APM wiki at docops.ca.com](https://docops.ca.com/display/APMDEVOPS).
 
-# Installation Instructions
-
-## Prerequisites
-* Install, configure and run an EPAgent on the same or a remote server. See [CA APM Environment Performance Agent Implementation Guide](https://wiki.ca.com/display/APMDEVOPS97/CA+APM+Environment+Performance+Agent+Implementation+Guide).
-
-## Dependencies
-Pyhton 3 with requests module. This can be obtained in one of the following ways:
+# Dependencies
+Pyhton 3 with requests module. Obtain in one of the following ways:
       `# yum install python-requests`
                    or
       `# pip install requests`
                    or
       `# easy_install requests`
 
-## Installation
-* Extract the zip or tar.gz file.
-* Copy docker.typeviewers.xml to your Enterprise Manager (MOM) <EM_HOME>/ext/xmltv.
+# Installation
 
-## Configuration
-Nothing else to configure.
+## Install Using CA APM Control Center
 
+### 10.5 
 
-# Usage Instructions
+1. Download the bundle (extension) from the CA APM Marketplace.
+   http://marketplace.ca.com/shop/ca/?cat=29
+2. Go to the Bundles page and click the **Import** button.
+2. Navigate to the downloaded bundle and click **Open**.
+3. On the Packages page, add the bundle to the desired package.
+4. Copy the docker.typeviewers.xml file from the extension <docker-EPA_REST> directory to the <MOM_HOME>/ext/xmltv directory.
 
-## Running the Docker field pack
-Run `python3 docker.py` from the command line, e.g.:
+### 10.2 and 10.3
+
+1. Download the extension (bundle) from the CA APM Marketplace.
+   http://marketplace.ca.com/shop/ca/?cat=29
+2. Navigate to the downloaded bundle.
+3. Copy the bundle to the <APMCommandCenterServer>/import directory. 
+   The bundle is automatically imported into the APM Command Center database and moved to the bundles directory.
+4. Copy the docker.typeviewers.xml file from the extension <docker-EPA_REST> directory to the <MOM_HOME>/ext/xmltv directory.
+
+## Install Manually
+
+### 10.5 and later
+
+1. Download the extension from the CA APM Marketplace.
+   http://marketplace.ca.com/shop/ca/?cat=29
+2. Navigate to the downloaded extension.
+3. Copy the .tar file to the <*Agent_Home*>/extensions/deploy directory.
+   The agent automatically automatically installs and deploys the extension.
+4. Copy the docker.typeviewers.xml file from the extension <docker-EPA_REST> directory to the <MOM_HOME>/ext/xmltv directory.
+   The Docker extension agent starts monitoring the Docker.
+
+### 10.3 and earlier
+
+1. Download the extension from the CA APM Marketplace.
+   http://marketplace.ca.com/shop/ca/?cat=29
+2. Navigate to the downloaded extension and unzip or untar the file as appropriate into the <*Agent_Home*> directory.
+3. Copy the extension jar file to the <*Agent_Home*>/core/ext directory.
+4. Copy the .pbd or pbl files to the <*Agent_Home*>/core/config directory.
+5. Update the IntroscopeAgent.profile file
+   * Navigate to <*Agent_Home*>/core/config to update the IntroscopeAgent.profile file.
+   * Add the .pbl files to the directives in the IntroscopeAgent.profile.
+6. Copy the docker.typeviewers.xml file from the extension <docker-EPA_REST> directory to the <MOM_HOME>/ext/xmltv directory.
+
+# Usage
+
+1. Run `python3 docker.py` from the command line.
+   For example:
 
 `python3 docker.py -p 8080 -d boot2docker -r 2376 --certificate=$DOCKER_CERT_PATH/cert.pem -k $DOCKER_CERT_PATH/key.pem`
 
-Change the parameters to fit your environment. Run the script with option '-h' to get this usage information:
+2. Change the parameters to fit your environment. Run the script with option '-h' to get this usage information:
 
 ```
 Usage: docker.py [options]
@@ -68,8 +107,8 @@ Options:
                           https private key
 ```
 
-## Metric description
-Metrics are published under the metrics path "Docker". At this level general information about this docker engine is provided:
+# Metrics
+These metrics about the Docker engine display under the Docker node:
 * Container Count
 * Image Count
 * Running Containers
@@ -77,7 +116,7 @@ Metrics are published under the metrics path "Docker". At this level general inf
 * MemoryLimit (boolean: 0/1)
 * SwapLimit (boolean: 0/1)
 
-Container metric for running containers are published under "Docker|Containers|<name>". Container metrics include
+These Container metrics for running containers display under the Docker|Containers|<name> node:
 * Image name
 * SizeRw and SizeRootFS: file system sizes
 * Status
@@ -85,39 +124,31 @@ Container metric for running containers are published under "Docker|Containers|<
 * Memory metrics
 * Network metrics (receive and transmit)
 
-For more information see [Docker Remote API](https://docs.docker.com/reference/api/docker_remote_api/).
+**More information:** [Docker Remote API](https://docs.docker.com/reference/api/docker_remote_api/).
 
-## Custom Management Modules
-None.
+# Custom Tab
+The docker.typeviewers.xml matches metric paths starting with "Docker". Copy the docker.typeviewers.xml file from the extension <docker-EPA_REST> directory to the `ext/xmltv` Enterprise Manager directory. Restart WebView or log off and back on to your Workstation. An overview provides general metrics and a list of containers.
 
-## Custom type viewers
-The type viewer docker.typeviewers.xml matches metric paths starting with "Docker". Copy it to the `ext/xmltv` folder of your APM Enterprise Manager and restart WebView or log off and back on to your Workstation. There is an overview providing general metrics and a list of containers. You can even see a Java agent monitoring the Tomcat application server running in container b9febdfcdd77:
-![Docker overview](Docker-overview.png "Docker overview")
+Container metrics about the file system, CPU, memory, and the network metrics display as graphs.
 
-For every container metrics about file system, CPU, memory and network metrics are shown as graphs:
-![Docker container metrics](Docker-container.png "Docker container metrics")
+# Debugging and Troubleshooting
+Your can run docker.py with option -v to provide verbose output. You can also remove the '#' in front of several print statements throughput the script.
 
-## Debugging and Troubleshooting
-Your can run docker.py with option -v to provide verbose output. In addition you can remove the '#' in front of several print statements throughput the script.
+# Support
+This document and extension are made available from CA Technologies. They are provided as examples at no charge as a courtesy to the CA APM Community at large. This extension might require modification for use in your environment. However, this extension is not supported by CA Technologies, and inclusion in this site should not be construed to be an endorsement or recommendation by CA Technologies. This extension is not covered by the CA Technologies software license agreement and there is no explicit or implied warranty from CA Technologies. The extension can be used and distributed freely amongst the CA APM Community, but not sold. As such, it is unsupported software, provided as is without warranty of any kind, express or implied, including but not limited to warranties of merchantability and fitness for a particular purpose. CA Technologies does not warrant that this resource will meet your requirements or that the operation of the resource will be uninterrupted or error free or that any defects will be corrected. The use of this extension implies that you understand and agree to the terms listed herein.
+Although this extension is unsupported, please let us know if you have any problems or questions. You can add comments to the CA CA APM Community site so that the author(s) can attempt to address the issue or question.
+Unless explicitly stated otherwise this extension is only supported on the same platforms as the CA APM Java agent. 
 
-## Support
-This document and associated tools are made available from CA Technologies as examples and provided at no charge as a courtesy to the CA APM Community at large. This resource may require modification for use in your environment. However, please note that this resource is not supported by CA Technologies, and inclusion in this site should not be construed to be an endorsement or recommendation by CA Technologies. These utilities are not covered by the CA Technologies software license agreement and there is no explicit or implied warranty from CA Technologies. They can be used and distributed freely amongst the CA APM Community, but not sold. As such, they are unsupported software, provided as is without warranty of any kind, express or implied, including but not limited to warranties of merchantability and fitness for a particular purpose. CA Technologies does not warrant that this resource will meet your requirements or that the operation of the resource will be uninterrupted or error free or that any defects will be corrected. The use of this resource implies that you understand and agree to the terms listed herein.
-
-Although these utilities are unsupported, please let us know if you have any problems or questions by adding a comment to the CA APM Community Site area where the resource is located, so that the Author(s) may attempt to address the issue or question.
-
-Unless explicitly stated otherwise this field pack is only supported on the same platforms as the APM core agent. See [APM Compatibility Guide](http://www.ca.com/us/support/ca-support-online/product-content/status/compatibility-matrix/application-performance-management-compatibility-guide.aspx).
-
-
-# Change log
-Version | Author | Comment
---------|--------|--------
-1.0 | [Guenter Grossberger](mailto:Guenter.Grossberger@ca.com) | First version of the field pack.
-
-## Support URL
+# Support URL
 https://github.com/CA-APM/ca-apm-fieldpack-docker/issues
 
-## Short Description
-Monitor Docker with CA APM
+# Product Compatibilty Matrix
+http://pcm.ca.com/
 
-## Categories
+# Categories
 Cloud, Virtualization/Containers
+
+# Change Log
+Version | Author | Comment
+--------|--------|--------
+1.0 | [Guenter Grossberger](mailto:Guenter.Grossberger@ca.com) | First version of the extension.
